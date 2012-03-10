@@ -1,0 +1,100 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{BD942A19-4BF6-4DA6-836E-338130A22C84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{90039FEA-B495-45F4-B523-EA30E7D686BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{BD3C7441-7D34-417C-A5AC-7FB4173A2584}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReEnterprise.Infrastructure.NHibernate", "ReEnterprise.Infrastructure.NHibernate\ReEnterprise.Infrastructure.NHibernate.csproj", "{EF192434-9CBB-4663-9DE0-7663A26D4FD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReEnterprise.Domain.Security.Contract", "ReEnterprise.Domain.Security.Contract\ReEnterprise.Domain.Security.Contract.csproj", "{2BC2B7FC-76E6-43B5-B6F3-AF7D7AD5F7E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReEnterprise.Domain.Security.Tests", "ReEnterprise.Domain.Security.Tests\ReEnterprise.Domain.Security.Tests.csproj", "{E61E1887-BDF0-4CE4-98C0-CAD759514058}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6C9E0045-9E3F-48C1-9971-0DCE663D7DB1}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		ReEnterprise.vsmdi = ReEnterprise.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReEnterprise.Infrastructure.Web", "ReEnterprise.Infrastructure.Web\ReEnterprise.Infrastructure.Web.csproj", "{C1B0F43E-1F5F-4BA1-B15D-3D6E2DDF922E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReEnterprise.Infrastructure.Web.Tests", "ReEnterprise.Infrastructure.Web.Tests\ReEnterprise.Infrastructure.Web.Tests.csproj", "{5DF1684B-60F6-48FA-BBA2-C0AA66DE09FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{5737D453-65EB-49BE-8D68-206B19B27D7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C858A707-FA27-4656-A12A-BC72E3313043}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReEnterprise.Infrastructure.Service", "ReEnterprise.Infrastructure.Service\ReEnterprise.Infrastructure.Service.csproj", "{FE0F7FC6-03CF-4F2E-AC45-F9CBCA358DC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{31607BD1-8546-4E28-8E6B-19B8285CC4ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReEnterprise.Core", "ReEnterprise.Core\ReEnterprise.Core.csproj", "{20AD1353-1FB4-4CE2-8D0A-9EEF35855953}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FAA58D24-F618-4F1B-8A2F-D3F1F395A889}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReEnterprise.Core.Tests", "ReEnterprise.Core.Tests\ReEnterprise.Core.Tests.csproj", "{D62E49A4-6585-4B85-8E0E-9C911D6C1F91}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = ReEnterprise.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF192434-9CBB-4663-9DE0-7663A26D4FD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF192434-9CBB-4663-9DE0-7663A26D4FD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF192434-9CBB-4663-9DE0-7663A26D4FD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF192434-9CBB-4663-9DE0-7663A26D4FD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BC2B7FC-76E6-43B5-B6F3-AF7D7AD5F7E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC2B7FC-76E6-43B5-B6F3-AF7D7AD5F7E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC2B7FC-76E6-43B5-B6F3-AF7D7AD5F7E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC2B7FC-76E6-43B5-B6F3-AF7D7AD5F7E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E61E1887-BDF0-4CE4-98C0-CAD759514058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E61E1887-BDF0-4CE4-98C0-CAD759514058}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E61E1887-BDF0-4CE4-98C0-CAD759514058}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E61E1887-BDF0-4CE4-98C0-CAD759514058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B0F43E-1F5F-4BA1-B15D-3D6E2DDF922E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B0F43E-1F5F-4BA1-B15D-3D6E2DDF922E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B0F43E-1F5F-4BA1-B15D-3D6E2DDF922E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B0F43E-1F5F-4BA1-B15D-3D6E2DDF922E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DF1684B-60F6-48FA-BBA2-C0AA66DE09FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF1684B-60F6-48FA-BBA2-C0AA66DE09FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DF1684B-60F6-48FA-BBA2-C0AA66DE09FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF1684B-60F6-48FA-BBA2-C0AA66DE09FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE0F7FC6-03CF-4F2E-AC45-F9CBCA358DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE0F7FC6-03CF-4F2E-AC45-F9CBCA358DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE0F7FC6-03CF-4F2E-AC45-F9CBCA358DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE0F7FC6-03CF-4F2E-AC45-F9CBCA358DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20AD1353-1FB4-4CE2-8D0A-9EEF35855953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20AD1353-1FB4-4CE2-8D0A-9EEF35855953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20AD1353-1FB4-4CE2-8D0A-9EEF35855953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20AD1353-1FB4-4CE2-8D0A-9EEF35855953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D62E49A4-6585-4B85-8E0E-9C911D6C1F91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D62E49A4-6585-4B85-8E0E-9C911D6C1F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D62E49A4-6585-4B85-8E0E-9C911D6C1F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D62E49A4-6585-4B85-8E0E-9C911D6C1F91}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2BC2B7FC-76E6-43B5-B6F3-AF7D7AD5F7E8} = {BD942A19-4BF6-4DA6-836E-338130A22C84}
+		{EF192434-9CBB-4663-9DE0-7663A26D4FD9} = {90039FEA-B495-45F4-B523-EA30E7D686BD}
+		{C1B0F43E-1F5F-4BA1-B15D-3D6E2DDF922E} = {90039FEA-B495-45F4-B523-EA30E7D686BD}
+		{FE0F7FC6-03CF-4F2E-AC45-F9CBCA358DC8} = {90039FEA-B495-45F4-B523-EA30E7D686BD}
+		{6C9E0045-9E3F-48C1-9971-0DCE663D7DB1} = {BD3C7441-7D34-417C-A5AC-7FB4173A2584}
+		{5737D453-65EB-49BE-8D68-206B19B27D7F} = {BD3C7441-7D34-417C-A5AC-7FB4173A2584}
+		{C858A707-FA27-4656-A12A-BC72E3313043} = {BD3C7441-7D34-417C-A5AC-7FB4173A2584}
+		{FAA58D24-F618-4F1B-8A2F-D3F1F395A889} = {BD3C7441-7D34-417C-A5AC-7FB4173A2584}
+		{E61E1887-BDF0-4CE4-98C0-CAD759514058} = {5737D453-65EB-49BE-8D68-206B19B27D7F}
+		{5DF1684B-60F6-48FA-BBA2-C0AA66DE09FE} = {C858A707-FA27-4656-A12A-BC72E3313043}
+		{20AD1353-1FB4-4CE2-8D0A-9EEF35855953} = {31607BD1-8546-4E28-8E6B-19B8285CC4ED}
+		{D62E49A4-6585-4B85-8E0E-9C911D6C1F91} = {FAA58D24-F618-4F1B-8A2F-D3F1F395A889}
+	EndGlobalSection
+EndGlobal
