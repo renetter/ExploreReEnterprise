@@ -21,6 +21,6 @@ namespace ReEnterprise.Core.Interface
         /// Check whether the target validation satisfy the business rule validation.
         /// </summary>
         /// <returns>Business rule validation result.</returns>
-        IList<ValidationMessage> Validate();
+        IEnumerable<ValidationMessage> Validate();
     }
 }

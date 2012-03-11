@@ -72,12 +72,20 @@ namespace ReEnterprise.Core.Tests
             IValidator<TestModel> validator = ServiceLocator.Current.GetInstance<IValidator<TestModel>>();
             validator.SetValidationTarget(model);
 
-            IList<ValidationMessage> message = validator.Validate();
+            var message = validator.Validate();
 
-            Assert.AreEqual(3, message.Count);
+            Assert.AreEqual(3, message.Count());
             Assert.IsTrue(message.Where(c => c.Field == "Id" && c.MessageType == ValidationMessageType.Error).Any());
             Assert.IsTrue(message.Where(c => c.Field == "Name" && c.MessageType == ValidationMessageType.Error).Any());
             Assert.IsTrue(message.Where(c => c.Field == "Age" && c.MessageType == ValidationMessageType.Error).Any());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Exception_Should_Be_Thrown_If_The_Target_Not_Set()
+        {
+            IValidator<TestModel> validator = ServiceLocator.Current.GetInstance<IValidator<TestModel>>();
+            validator.Validate();
         }
     }
 }

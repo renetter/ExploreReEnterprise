@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ReEnterprise.Core
 {
-    public sealed class CoreConstants
+    public static class CoreConstants
     {
-        public sealed class ValidationErrorCodes
+        public static class ValidationErrorCodes
         {
             public const string DataAnnotation = "DataAnnotation";
         }

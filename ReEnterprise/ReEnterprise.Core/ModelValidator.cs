@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ReEnterprise.Core.Interface;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using ReEnterprise.Core.Interface;
 
 namespace ReEnterprise.Core
 {
@@ -28,8 +27,13 @@ namespace ReEnterprise.Core
         /// Validates the model by using the data annotation validation.
         /// </summary>
         /// <returns>Validation error messages.</returns>
-        public IList<ValidationMessage> Validate()
+        public IEnumerable<ValidationMessage> Validate()
         {
+            if (_target == null)
+            {
+                throw new InvalidOperationException("Target must be set before it can be validated.");
+            }
+
             IList<ValidationResult> validationResults = new List<ValidationResult>();
             IList<ValidationMessage> modelValidationResults = new List<ValidationMessage>();
 

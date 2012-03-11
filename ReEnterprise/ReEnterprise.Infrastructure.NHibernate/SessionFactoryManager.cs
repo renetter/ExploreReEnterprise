@@ -12,7 +12,7 @@ namespace ReEnterprise.Infrastructure.NHibernate
 {
     public class SessionFactoryManager : ISessionFactoryManager
     {
-        private static object _syncObject;
+        private static object _syncObject = new object();
         private static ISessionFactory _sessionFactory;
         private ISession _session;
 
