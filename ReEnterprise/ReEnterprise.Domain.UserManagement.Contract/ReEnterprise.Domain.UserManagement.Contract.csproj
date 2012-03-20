@@ -52,8 +52,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PasswordPolicyResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\UserResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Service\IUserManagementService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validator\IPasswordPolicyRuleValidator.cs" />
     <Compile Include="Validator\PasswordPolicyValidator.cs" />
     <Compile Include="Validator\UserValidator.cs" />
   </ItemGroup>
@@ -70,6 +76,10 @@
     <EmbeddedResource Include="Resources\PasswordPolicyResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PasswordPolicyResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UserResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

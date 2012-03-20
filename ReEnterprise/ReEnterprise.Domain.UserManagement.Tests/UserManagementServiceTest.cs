@@ -39,7 +39,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
             PasswordPolicy passwordPolicy = new PasswordPolicy
             {
                 MinimumLength = 5,
-                IsMixedCharacter = false
+                StrongPassword = false
             };
 
             IUserManagementService userService = ServiceLocator.Current.GetInstance<IUserManagementService>();
@@ -55,7 +55,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
             PasswordPolicy passwordPolicy = new PasswordPolicy
             {
                 MinimumLength = 1,
-                IsMixedCharacter = true,
+                StrongPassword = true,
             };
 
             IUserManagementService userService = ServiceLocator.Current.GetInstance<IUserManagementService>();

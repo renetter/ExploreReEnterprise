@@ -13,10 +13,10 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Validator
         public PasswordPolicyValidator()
         {
             RuleFor(c => c.MinimumLength).GreaterThan(0).WithName(PasswordPolicyResources.MinimumLength);
-            // Is mixed character can only be set if the minimun length greather than 3
-            RuleFor(c => c.IsMixedCharacter).Must((model, propertyValue) => model.MinimumLength >= 3 || !propertyValue)
+            // strong password can only be set if the minimun length greather than 3
+            RuleFor(c => c.StrongPassword).Must((model, propertyValue) => model.MinimumLength >= 3 || !propertyValue)
                 .WithMessage(string.Format(PasswordPolicyResources.MixedCharacterValidationError, 
-                                           PasswordPolicyResources.IsMixedCharacter, 
+                                           PasswordPolicyResources.StrongPassword, 
                                            PasswordPolicyResources.MinimumLength, 3));
         }
     }

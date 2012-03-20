@@ -12,7 +12,7 @@ namespace ReEnterprise.Infrastructure.NHibernate.Mapping
         public PasswordPolicyMapping()
         {
             Map(c => c.MinimumLength);
-            Map(c => c.IsMixedCharacter);
+            Map(c => c.StrongPassword);
         }
     }
 }

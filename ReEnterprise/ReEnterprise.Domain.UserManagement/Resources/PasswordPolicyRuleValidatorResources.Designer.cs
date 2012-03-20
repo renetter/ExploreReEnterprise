@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReEnterprise.Domain.UserManagement.Contract.Resources {
+namespace ReEnterprise.Domain.UserManagement.Resources {
     using System;
     
     
@@ -22,24 +22,25 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class PasswordPolicyResources {
+    internal class PasswordPolicyRuleValidatorResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal PasswordPolicyResources() {
+        internal PasswordPolicyRuleValidatorResources() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ReEnterprise.Domain.UserManagement.Contract.Resources.PasswordPolicyResources", typeof(PasswordPolicyResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ReEnterprise.Domain.UserManagement.Resources.PasswordPolicyRuleValidatorResources" +
+                            "", typeof(PasswordPolicyRuleValidatorResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +52,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,29 +62,20 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimum Length.
+        ///   Looks up a localized string similar to {0} length should must not less than {1} characters..
         /// </summary>
-        public static string MinimumLength {
+        internal static string PasswordMinimumLengthMessage {
             get {
-                return ResourceManager.GetString("MinimumLength", resourceCulture);
+                return ResourceManager.GetString("PasswordMinimumLengthMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} can only be set when the {1} value is greather than {2}.
+        ///   Looks up a localized string similar to {0} must contain at least one letter, numeric and symbol character..
         /// </summary>
-        public static string MixedCharacterValidationError {
+        internal static string PasswordMustContainLetterNumericSymbol {
             get {
-                return ResourceManager.GetString("MixedCharacterValidationError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mixed Character Rules.
-        /// </summary>
-        public static string StrongPassword {
-            get {
-                return ResourceManager.GetString("StrongPassword", resourceCulture);
+                return ResourceManager.GetString("PasswordMustContainLetterNumericSymbol", resourceCulture);
             }
         }
     }

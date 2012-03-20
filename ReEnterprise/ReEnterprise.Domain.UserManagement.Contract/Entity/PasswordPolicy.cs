@@ -32,6 +32,6 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// 	<c>true</c> if this instance is mixed character; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public bool IsMixedCharacter { get; set; }
+        public bool StrongPassword { get; set; }
     }
 }
