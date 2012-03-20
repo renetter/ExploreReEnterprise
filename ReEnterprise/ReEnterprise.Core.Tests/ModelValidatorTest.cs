@@ -8,28 +8,34 @@ using Microsoft.Practices.ServiceLocation;
 using CommonServiceLocator.WindsorAdapter;
 using Castle.Windsor;
 using Castle.MicroKernel.Registration;
-using System.ComponentModel.DataAnnotations;
 using ReEnterprise.Core.Tests.Resources;
 using ReEnterprise.Core.Resources;
+using ReEnterprise.Core.Generic;
+using FluentValidation;
+using FluentValidation.Attributes;
 
 namespace ReEnterprise.Core.Tests
 {    
     [TestClass]
     public class ModelValidatorTest
     {
+        private class TestModelValidator : AbstractValidator<TestModel>
+        {
+            public TestModelValidator()
+            {
+                RuleFor(c => c.Id).NotEmpty().Length(36).WithLocalizedName(() => TestModelResources.Id);
+                RuleFor(c => c.Name).NotEmpty().WithLocalizedName(() => TestModelResources.Name);
+                RuleFor(c => c.Age).InclusiveBetween(20, 50).WithLocalizedName(() => TestModelResources.Age);
+            }
+        }
+
+        [Validator(typeof(TestModelValidator))]
         private class TestModel
         {
-            [Display(Name = "Id", ResourceType = typeof(TestModelResources))]
-            [Required(ErrorMessageResourceType = typeof(CoreResources), ErrorMessageResourceName = "Required")]
-            [StringLength(36)]
             public string Id { get; set; }
 
-            [Display(Name = "Name", ResourceType = typeof(TestModelResources))]
-            [Required(ErrorMessageResourceType = typeof(CoreResources), ErrorMessageResourceName = "Required")]
             public string Name { get; set; }
 
-            [Display(Name = "Age", ResourceType = typeof(TestModelResources))]
-            [Range(20, 50, ErrorMessageResourceType = typeof(CoreResources), ErrorMessageResourceName = "Range")]
             public int Age { get; set; }
         }
 
@@ -38,8 +44,7 @@ namespace ReEnterprise.Core.Tests
         {
             IWindsorContainer container = new WindsorContainer();
 
-            container.Register(
-                Component.For(typeof(IValidator<>)).ImplementedBy(typeof(ModelValidator<>)));
+            container.Install(new CoreWindsorInstaller());
 
             ServiceLocator.SetLocatorProvider(() => new WindsorServiceLocator(container));
         }
@@ -54,7 +59,7 @@ namespace ReEnterprise.Core.Tests
                 Age = 25
             };
 
-            IValidator<TestModel> validator = ServiceLocator.Current.GetInstance<IValidator<TestModel>>();
+            IRuleValidator<TestModel> validator = ServiceLocator.Current.GetInstance<ModelValidator<TestModel>>();
 
             validator.SetValidationTarget(model);
 
@@ -69,12 +74,12 @@ namespace ReEnterprise.Core.Tests
                 Age = 10 
             };
 
-            IValidator<TestModel> validator = ServiceLocator.Current.GetInstance<IValidator<TestModel>>();
+            IRuleValidator<TestModel> validator = ServiceLocator.Current.GetInstance<ModelValidator<TestModel>>();
             validator.SetValidationTarget(model);
 
             var message = validator.Validate();
 
-            Assert.AreEqual(3, message.Count());
+            Assert.AreEqual(4, message.Count());
             Assert.IsTrue(message.Where(c => c.Field == "Id" && c.MessageType == ValidationMessageType.Error).Any());
             Assert.IsTrue(message.Where(c => c.Field == "Name" && c.MessageType == ValidationMessageType.Error).Any());
             Assert.IsTrue(message.Where(c => c.Field == "Age" && c.MessageType == ValidationMessageType.Error).Any());
@@ -84,7 +89,7 @@ namespace ReEnterprise.Core.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void Exception_Should_Be_Thrown_If_The_Target_Not_Set()
         {
-            IValidator<TestModel> validator = ServiceLocator.Current.GetInstance<IValidator<TestModel>>();
+            IRuleValidator<TestModel> validator = ServiceLocator.Current.GetInstance<ModelValidator<TestModel>>();
             validator.Validate();
         }
     }

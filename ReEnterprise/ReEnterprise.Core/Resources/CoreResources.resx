@@ -117,14 +117,62 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreditCardError" xml:space="preserve">
+    <value>{PropertyName} is not a valid credit card number.</value>
+  </data>
+  <data name="email_error" xml:space="preserve">
+    <value>{PropertyName} is not a valid email address.</value>
+  </data>
+  <data name="equal_error" xml:space="preserve">
+    <value>{PropertyName} should be equal to {PropertyValue}.</value>
+  </data>
+  <data name="exact_length_error" xml:space="preserve">
+    <value>{PropertyName} must be {MaxLength} characters in length. You entered {TotalLength} characters.</value>
+  </data>
+  <data name="exclusivebetween_error" xml:space="preserve">
+    <value>{PropertyName} must be between {From} and {To} (exclusive). You entered {Value}.</value>
+  </data>
+  <data name="greaterthanorequal_error" xml:space="preserve">
+    <value>{PropertyName} must be greater than or equal to {ComparisonValue}.</value>
+  </data>
+  <data name="greaterthan_error" xml:space="preserve">
+    <value>{PropertyName} must be greater than {ComparisonValue}.</value>
+  </data>
+  <data name="inclusivebetween_error" xml:space="preserve">
+    <value>{PropertyName} must be between {From} and {To}. You entered {Value}.</value>
+  </data>
+  <data name="length_error" xml:space="preserve">
+    <value>{PropertyName} must be between {MinLength} and {MaxLength} characters. You entered {TotalLength} characters.</value>
+  </data>
+  <data name="lessthanorequal_error" xml:space="preserve">
+    <value>{PropertyName} must be less than or equal to {ComparisonValue}.</value>
+  </data>
+  <data name="lessthan_error" xml:space="preserve">
+    <value>{PropertyName} must be less than {ComparisonValue}.</value>
+  </data>
   <data name="MaxLength" xml:space="preserve">
     <value>{0} cannot be more than {1} characters.</value>
+  </data>
+  <data name="notempty_error" xml:space="preserve">
+    <value>{PropertyName} should not be empty.</value>
+  </data>
+  <data name="notequal_error" xml:space="preserve">
+    <value>{PropertyName} should not be equal to {PropertyValue}.</value>
+  </data>
+  <data name="notnull_error" xml:space="preserve">
+    <value>{PropertyName} must not be empty.</value>
   </data>
   <data name="NotValid" xml:space="preserve">
     <value>{0} value is not valid.</value>
   </data>
+  <data name="predicate_error" xml:space="preserve">
+    <value>The specified condition was not met for {PropertyName}.</value>
+  </data>
   <data name="Range" xml:space="preserve">
     <value>{0} must be between {1} and {2}.</value>
+  </data>
+  <data name="regex_error" xml:space="preserve">
+    <value>{PropertyName} is not in the correct format.</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>{0} must be entered.</value>

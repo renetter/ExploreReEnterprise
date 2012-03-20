@@ -14,6 +14,10 @@ namespace ReEnterprise.Core.Tests
     [TestClass()]
     public class ValidatorExtensionTests
     {
+        private class ValidatorEntity : EntityBase
+        {
+            public string Id { get; set; }
+        }
 
         /// <summary>
         ///A test for IsContainErrors
@@ -52,6 +56,28 @@ namespace ReEnterprise.Core.Tests
             bool actual;
             actual = ValidatorExtension.HasWarning(messages);
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void Create_Validation_Message()
+        {
+            ValidatorEntity entity = new ValidatorEntity { Id = "Test"};
+            ValidationMessage actual = entity.CreateValidationMessage(c => c.Id, "Test", ValidationMessageType.Error);
+
+            Assert.AreEqual("Id", actual.Field);
+            Assert.AreEqual("Test", actual.MessageValue);
+            Assert.AreEqual(ValidationMessageType.Error, actual.MessageType);
+        }
+
+        [TestMethod()]
+        public void Add_Validation_Message()
+        {
+            IList<ValidationMessage> addedMessages = new List<ValidationMessage> { new ValidationMessage { Field = "Test" } };
+            IList<ValidationMessage> messages = new List<ValidationMessage>();
+
+            messages.AddValidationMessages(addedMessages);
+
+            Assert.AreEqual(1, messages.Count);
         }
     }
 }

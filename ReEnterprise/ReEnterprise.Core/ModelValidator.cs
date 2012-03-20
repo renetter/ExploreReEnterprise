@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using ReEnterprise.Core.Interface;
+using ReEnterprise.Core.Generic;
+using FluentValidation;
+using Microsoft.Practices.ServiceLocation;
+using FluentValidation.Results;
 
 namespace ReEnterprise.Core
 {
@@ -10,7 +12,7 @@ namespace ReEnterprise.Core
     /// Generic validator for model that has implemented data annotation validation.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ModelValidator<T> : IValidator<T>
+    public class ModelValidator<T> : IRuleValidator<T>
     {
         private T _target;
 
@@ -34,19 +36,20 @@ namespace ReEnterprise.Core
                 throw new InvalidOperationException("Target must be set before it can be validated.");
             }
 
-            IList<ValidationResult> validationResults = new List<ValidationResult>();
             IList<ValidationMessage> modelValidationResults = new List<ValidationMessage>();
 
-            // invoke the data annotation validator
-            Validator.TryValidateObject(_target, new ValidationContext(_target, null, null), validationResults, true);
+            IValidatorFactory validatorFactory = ServiceLocator.Current.GetInstance<IValidatorFactory>();
 
-            // map the data annotation validation message to validation message
-            foreach (var validationResult in validationResults)
+            IValidator modelValidator = validatorFactory.GetValidator<T>();
+
+            ValidationResult validationResults = modelValidator.Validate(_target);
+
+            // map the fluent validation message to validation message
+            foreach (var validationResult in validationResults.Errors)
             {
                 modelValidationResults.Add(new ValidationMessage
                 {
-                    Code = CoreConstants.ValidationErrorCodes.DataAnnotation,
-                    Field = validationResult.MemberNames.FirstOrDefault(),
+                    Field = validationResult.PropertyName,
                     MessageType = ValidationMessageType.Error,
                     MessageValue = validationResult.ErrorMessage                    
                 });

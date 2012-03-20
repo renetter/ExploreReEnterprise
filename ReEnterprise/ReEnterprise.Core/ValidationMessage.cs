@@ -13,15 +13,6 @@ namespace ReEnterprise.Core
     public class ValidationMessage
     {
         /// <summary>
-        /// Gets or sets the message code.
-        /// </summary>
-        /// <value>
-        /// The message code.
-        /// </value>
-        [DataMember]
-        public string Code { get; set; }
-
-        /// <summary>
         /// Gets or sets the field that invoked the validation message. May be empty if there are no field that invokes the validation message.
         /// </summary>
         /// <value>
