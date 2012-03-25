@@ -35,7 +35,7 @@ namespace ReEnterprise.Core.Tests
 
             IEnumerable<ValidationMessage> validationResult = businessRuleValidator.Validate();
 
-            Assert.IsTrue(validationResult.Count() > 0);
+            Assert.IsTrue(validationResult.Any());
         }
 
         #region Nested type: TestModel

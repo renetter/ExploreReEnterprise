@@ -7,9 +7,12 @@ using Castle.Windsor;
 using Castle.Windsor.Installer;
 using CommonServiceLocator.WindsorAdapter;
 using Microsoft.Practices.ServiceLocation;
+using Moq;
 using ReEnterprise.Infrastructure.NHibernate;
 using ReEnterprise.Infrastructure.NHibernate.Interface;
+using ReEnterprise.Infrastructure.Service.Interceptor;
 using ReEnterprise.Infrastructure.Service.UserManagement;
+using ReEnterprise.Core.Interface;
 
 namespace ReEnterprise.Infrastructure.Service
 {
@@ -29,6 +32,9 @@ namespace ReEnterprise.Infrastructure.Service
             container.Register(
                 Component.For<ISessionFactoryManager>().ImplementedBy<SessionFactoryManager>().LifeStyle.PerWcfOperation
                     ());
+
+            container.Register(Component.For<ILogger>().Instance(new Mock<ILogger>().Object));
+            container.Register(Component.For<ServiceInterceptor>().LifeStyle.Transient);
 
             container.AddFacility<WcfFacility>().Register(
                 Component.For<ISecurityService>().ImplementedBy<SecurityService>());

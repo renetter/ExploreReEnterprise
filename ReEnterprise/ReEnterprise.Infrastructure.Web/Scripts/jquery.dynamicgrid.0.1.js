@@ -88,6 +88,8 @@
             } else if (option.contents.length - 1 >= row) {
                 return option.contents[row];
             }
+
+            return null;
         },
 
         deleteRow: function (row) {
@@ -898,10 +900,10 @@
 
             switch (columnDef.type) {
                 case "number": cellValue = Number(cellValue); break;
-                // Nullable number                                                                                                                                                                                                                                
+                // Nullable number                                                                                                                                                                                                                                 
                 case "number?": cellValue = cellValue == "" ? undefined : Number(cellValue); break;
                 case "boolean": cellValue = cellValue == true || cellValue == "true"; break;
-                // When the cell is set to empty string then don't save it                                                                                        
+                // When the cell is set to empty string then don't save it                                                                                         
                 case "date": cellValue = parseDate(defaultDateFormat, cellValue);
             }
 

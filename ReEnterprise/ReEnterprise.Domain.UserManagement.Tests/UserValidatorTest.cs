@@ -59,7 +59,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
 
             validator.Add(ServiceLocator.Current.GetInstance<IRuleValidator<User>>(), user);
 
-            IEnumerable<ValidationMessage> result = validator.Validate();
+            IEnumerable<ValidationMessage> result = validator.Validate().ToList();
 
             Assert.IsTrue(result.HasError());
 

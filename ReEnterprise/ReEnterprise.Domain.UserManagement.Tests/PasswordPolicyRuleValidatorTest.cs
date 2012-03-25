@@ -77,7 +77,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
             validator.Add(ServiceLocator.Current.GetInstance<IPasswordPolicyRuleValidator>(), user);
 
             // Act
-            IEnumerable<ValidationMessage> result = validator.Validate();
+            IEnumerable<ValidationMessage> result = validator.Validate().ToList();
 
             // Assert
             Assert.IsTrue(result.HasError());
@@ -98,7 +98,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
             validator.Add(ServiceLocator.Current.GetInstance<IPasswordPolicyRuleValidator>(), user);
 
             // Act
-            IEnumerable<ValidationMessage> result = validator.Validate();
+            IEnumerable<ValidationMessage> result = validator.Validate().ToList();
 
             // Assert
             Assert.IsTrue(result.HasError());

@@ -36,12 +36,7 @@ namespace ReEnterprise.Infrastructure.NHibernate
 
         public ISession GetSession()
         {
-            if (_session == null)
-            {
-                _session = GetSessionFactory().OpenSession();
-            }
-
-            return _session;
+            return _session ?? (_session = GetSessionFactory().OpenSession());
         }
 
         #endregion

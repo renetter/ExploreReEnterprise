@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
+﻿using System.ServiceModel;
 using ReEnterprise.Domain.UserManagement.Contract.Entity;
 using ReEnterprise.Domain.UserManagement.Contract.Service;
+using ReEnterprise.Infrastructure.Service.Attribute;
 
 namespace ReEnterprise.Infrastructure.Service.UserManagement
 {
@@ -13,6 +9,7 @@ namespace ReEnterprise.Infrastructure.Service.UserManagement
     public interface ISecurityService
     {
         [OperationContract]
+        [EnableTransaction]
         CreateUserResponse CreateUser(User newUser);
     }
 }

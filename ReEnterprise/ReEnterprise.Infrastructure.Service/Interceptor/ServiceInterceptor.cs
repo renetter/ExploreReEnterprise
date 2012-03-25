@@ -1,8 +1,8 @@
-﻿using Castle.DynamicProxy;
+﻿using System;
 using System.Linq;
+using Castle.DynamicProxy;
 using NHibernate;
 using ReEnterprise.Core.Interface;
-using System;
 using ReEnterprise.Infrastructure.NHibernate.Interface;
 using ReEnterprise.Infrastructure.Service.Attribute;
 using IInterceptor = Castle.DynamicProxy.IInterceptor;
@@ -11,8 +11,8 @@ namespace ReEnterprise.Infrastructure.Service.Interceptor
 {
     public class ServiceInterceptor : IInterceptor
     {
-        private ISessionFactoryManager _sessionFactoryManager;
-        private ILogger _logger;
+        private readonly ILogger _logger;
+        private readonly ISessionFactoryManager _sessionFactoryManager;
 
         public ServiceInterceptor(ISessionFactoryManager sessionFactoryManager, ILogger logger)
         {
@@ -20,10 +20,13 @@ namespace ReEnterprise.Infrastructure.Service.Interceptor
             _logger = logger;
         }
 
+        #region IInterceptor Members
+
         public void Intercept(IInvocation invocation)
         {
-            var transactionEnabled = invocation.Method.GetCustomAttributes(typeof(EnableTransactionAttribute), false).Any();
-            var loggingEnabled = invocation.Method.GetCustomAttributes(typeof(EnableLoggingAttribute), false).Any();
+            bool transactionEnabled =
+                invocation.Method.GetCustomAttributes(typeof (EnableTransactionAttribute), false).Any();
+            bool loggingEnabled = invocation.Method.GetCustomAttributes(typeof (EnableLoggingAttribute), false).Any();
 
             try
             {
@@ -40,16 +43,15 @@ namespace ReEnterprise.Infrastructure.Service.Interceptor
                     invocation.Proceed();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 if (loggingEnabled)
                 {
                     _logger.WriteLog(e.Message);
                 }
             }
-
         }
+
+        #endregion
     }
-
-
 }

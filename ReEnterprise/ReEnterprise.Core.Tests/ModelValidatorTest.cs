@@ -53,7 +53,7 @@ namespace ReEnterprise.Core.Tests
             var validator = ServiceLocator.Current.GetInstance<IRuleValidator<TestModel>>();
             validator.SetValidationTarget(model);
 
-            IEnumerable<ValidationMessage> message = validator.Validate();
+            IEnumerable<ValidationMessage> message = validator.Validate().ToList();
 
             Assert.AreEqual(4, message.Count());
             Assert.IsTrue(message.Any(c => c.Field == "Id" && c.MessageType == ValidationMessageType.Error));

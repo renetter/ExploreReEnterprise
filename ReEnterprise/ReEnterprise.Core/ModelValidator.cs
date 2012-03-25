@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
 using ReEnterprise.Core.Generic;
@@ -42,24 +43,15 @@ namespace ReEnterprise.Core
                 throw new InvalidOperationException("Target must be set before it can be validated.");
             }
 
-            IList<ValidationMessage> modelValidationResults = new List<ValidationMessage>();
-
             IValidator modelValidator = _validatorFactory.GetValidator<T>();
 
             ValidationResult validationResults = modelValidator.Validate(_target);
 
             // map the fluent validation message to validation message
-            foreach (ValidationFailure validationResult in validationResults.Errors)
-            {
-                modelValidationResults.Add(new ValidationMessage
-                                               {
-                                                   Field = validationResult.PropertyName,
-                                                   MessageType = ValidationMessageType.Error,
-                                                   MessageValue = validationResult.ErrorMessage
-                                               });
-            }
-
-            return modelValidationResults;
+            return validationResults.Errors.Select(validationResult => new ValidationMessage
+                                                                           {
+                                                                               Field = validationResult.PropertyName, MessageType = ValidationMessageType.Error, MessageValue = validationResult.ErrorMessage
+                                                                           }).ToList();
         }
 
         #endregion
