@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Castle.MicroKernel.Registration;
-using ReEnterprise.Core.Interface;
+﻿using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor;
 using FluentValidation;
 using FluentValidation.Attributes;
-using ReEnterprise.Core.Resources;
 using ReEnterprise.Core.Generic;
+using ReEnterprise.Core.Interface;
+using ReEnterprise.Core.Resources;
 
 namespace ReEnterprise.Core
 {
@@ -16,13 +14,20 @@ namespace ReEnterprise.Core
     /// </summary>
     public class CoreInstaller : IWindsorInstaller
     {
-        public void Install(Castle.Windsor.IWindsorContainer container, Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore store)
-        {
-            container.Register(Component.For(typeof(IRuleValidator<>)).ImplementedBy(typeof(ModelValidator<>)).LifeStyle.Transient);
-            container.Register(Component.For<IBusinessRulesValidator>().ImplementedBy<BusinessRulesValidator>().LifeStyle.Transient);
-            container.Register(Component.For<IValidatorFactory>().ImplementedBy<AttributedValidatorFactory>().LifeStyle.Singleton);
+        #region IWindsorInstaller Members
 
-            ValidatorOptions.ResourceProviderType = typeof(CoreResources);
+        public void Install(IWindsorContainer container, IConfigurationStore store)
+        {
+            container.Register(
+                Component.For(typeof (IRuleValidator<>)).ImplementedBy(typeof (ModelValidator<>)).LifeStyle.Transient);
+            container.Register(
+                Component.For<IBusinessRulesValidator>().ImplementedBy<BusinessRulesValidator>().LifeStyle.Transient);
+            container.Register(
+                Component.For<IValidatorFactory>().ImplementedBy<AttributedValidatorFactory>().LifeStyle.Singleton);
+
+            ValidatorOptions.ResourceProviderType = typeof (CoreResources);
         }
+
+        #endregion
     }
 }

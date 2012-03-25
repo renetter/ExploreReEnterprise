@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using NHibernate;
 using ReEnterprise.Core.Interface;
 using ReEnterprise.Infrastructure.NHibernate.Interface;
-using NHibernate;
 
 namespace ReEnterprise.Infrastructure.NHibernate
 {
-    public class TransactionManagerNHibernate: ITransactionManager
+    public class TransactionManagerNHibernate : ITransactionManager
     {
-        private ISessionFactoryManager _sessionFactoryManager;
+        private readonly ISessionFactoryManager _sessionFactoryManager;
         private ITransaction _transaction;
 
         public TransactionManagerNHibernate(ISessionFactoryManager sessionFactoryManager)
         {
             _sessionFactoryManager = sessionFactoryManager;
         }
+
+        #region ITransactionManager Members
 
         public void BeginTransaction()
         {
@@ -45,5 +44,7 @@ namespace ReEnterprise.Infrastructure.NHibernate
 
             _transaction.Rollback();
         }
+
+        #endregion
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ReEnterprise.Core.Interface;
+﻿using System.Collections.Generic;
 using ReEnterprise.Core.Generic;
+using ReEnterprise.Core.Interface;
 
 namespace ReEnterprise.Core
 {
@@ -12,7 +9,7 @@ namespace ReEnterprise.Core
     /// </summary>
     public class BusinessRulesValidator : IBusinessRulesValidator
     {
-        private IList<IRuleValidator> _validators;
+        private readonly IList<IRuleValidator> _validators;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BusinessRulesValidator"/> class.
@@ -21,6 +18,8 @@ namespace ReEnterprise.Core
         {
             _validators = new List<IRuleValidator>();
         }
+
+        #region IBusinessRulesValidator Members
 
         /// <summary>
         /// Adds the specified validator.
@@ -53,12 +52,14 @@ namespace ReEnterprise.Core
         {
             IList<ValidationMessage> result = new List<ValidationMessage>();
 
-            foreach (var validator in _validators)
+            foreach (IRuleValidator validator in _validators)
             {
                 result.AddValidationMessages(validator.Validate());
             }
 
             return result;
         }
+
+        #endregion
     }
 }

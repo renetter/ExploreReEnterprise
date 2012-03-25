@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
-using ReEnterprise.Domain.UserManagement.Contract.Validator;
 using FluentValidation.Attributes;
-using ReEnterprise.Core;
+using ReEnterprise.Domain.UserManagement.Contract.Validator;
 
 namespace ReEnterprise.Domain.UserManagement.Contract.Entity
 {
@@ -13,16 +9,17 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
     /// User entity.
     /// </summary>
     [DataContract]
-    [Validator(typeof(UserValidator))]
+    [Validator(typeof (UserValidator))]
     public class User
     {
+        private string _userId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
         public User()
         {
-            UserId = Guid.NewGuid().ToString();
+            _userId = Guid.NewGuid().ToString();
         }
 
         /// <summary>
@@ -32,7 +29,11 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The user id.
         /// </value>
         [DataMember]
-        public virtual string UserId { get; set; }
+        public virtual string UserId
+        {
+            get { return _userId; }
+            set { _userId = value; }
+        }
 
         /// <summary>
         /// Gets or sets the first name.

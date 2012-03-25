@@ -90,9 +90,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\EnableLoggingAttribute.cs" />
+    <Compile Include="Attribute\EnableTransactionAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interceptor\ServiceInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserManagement\ISecurityService.cs" />
     <Compile Include="UserManagement\SecurityService.svc.cs">

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Castle.Windsor;
-using ReEnterprise.Core;
-using ReEnterprise.Domain.UserManagement.Contract.Entity;
-using ReEnterprise.Core.Interface;
-using Microsoft.Practices.ServiceLocation;
 using CommonServiceLocator.WindsorAdapter;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ReEnterprise.Core;
 using ReEnterprise.Core.Generic;
+using ReEnterprise.Core.Interface;
+using ReEnterprise.Domain.UserManagement.Contract.Entity;
 
 namespace ReEnterprise.Domain.UserManagement.Tests
 {
@@ -29,24 +28,24 @@ namespace ReEnterprise.Domain.UserManagement.Tests
         [TestMethod]
         public void Valid_User_Not_Produce_Validation_Error()
         {
-            User user = new User
-            {
-                UserId = Guid.NewGuid().ToString(),
-                FirstName = "User 1",
-                LastName = "Last Name",
-                Email = "test@test.com",
-                PhoneNumber = "1245232323",
-                Password = "A12@#ddd",
-                ApplyPasswordPolicy = true,
-                SecurityQuestion = "Test",
-                SecurityQuestionAnswer = "Test"
-            };
+            var user = new User
+                           {
+                               UserId = Guid.NewGuid().ToString(),
+                               FirstName = "User 1",
+                               LastName = "Last Name",
+                               Email = "test@test.com",
+                               PhoneNumber = "1245232323",
+                               Password = "A12@#ddd",
+                               ApplyPasswordPolicy = true,
+                               SecurityQuestion = "Test",
+                               SecurityQuestionAnswer = "Test"
+                           };
 
-            IBusinessRulesValidator validator = ServiceLocator.Current.GetInstance<IBusinessRulesValidator>();
+            var validator = ServiceLocator.Current.GetInstance<IBusinessRulesValidator>();
 
             validator.Add(ServiceLocator.Current.GetInstance<IRuleValidator<User>>(), user);
 
-            var validationResult = validator.Validate();
+            IEnumerable<ValidationMessage> validationResult = validator.Validate();
 
             Assert.IsFalse(validationResult.HasError());
         }
@@ -54,13 +53,13 @@ namespace ReEnterprise.Domain.UserManagement.Tests
         [TestMethod]
         public void Mandatory_Validation_Not_Satisfied_Will_Produce_Validation_Error()
         {
-            User user = new User();
+            var user = new User();
 
-            IBusinessRulesValidator validator = ServiceLocator.Current.GetInstance<IBusinessRulesValidator>();
+            var validator = ServiceLocator.Current.GetInstance<IBusinessRulesValidator>();
 
             validator.Add(ServiceLocator.Current.GetInstance<IRuleValidator<User>>(), user);
 
-            var result = validator.Validate();
+            IEnumerable<ValidationMessage> result = validator.Validate();
 
             Assert.IsTrue(result.HasError());
 

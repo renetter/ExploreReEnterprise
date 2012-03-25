@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ReEnterprise.Core.Interface;
+﻿using ReEnterprise.Core.Interface;
 
 namespace ReEnterprise.Core.Generic
 {

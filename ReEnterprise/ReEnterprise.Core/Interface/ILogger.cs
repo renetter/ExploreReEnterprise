@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ReEnterprise.Core.Interface
-{       
+﻿namespace ReEnterprise.Core.Interface
+{
     /// <summary>
     /// Provides interface for saving application log.
     /// </summary>

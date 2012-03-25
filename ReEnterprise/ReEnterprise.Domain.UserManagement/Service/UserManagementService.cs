@@ -1,40 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using ReEnterprise.Domain.UserManagement.Contract;
-using ReEnterprise.Domain.UserManagement.Contract.Service;
-using ReEnterprise.Domain.UserManagement.Contract.Validator;
 using ReEnterprise.Core;
-using ReEnterprise.Domain.UserManagement.Contract.Repository;
+using ReEnterprise.Core.Generic;
 using ReEnterprise.Core.Interface;
 using ReEnterprise.Domain.UserManagement.Contract.Entity;
-using ReEnterprise.Core.Generic;
+using ReEnterprise.Domain.UserManagement.Contract.Repository;
+using ReEnterprise.Domain.UserManagement.Contract.Service;
+using ReEnterprise.Domain.UserManagement.Contract.Validator;
 
-namespace ReEnterprise.Domain.UserManagement
+namespace ReEnterprise.Domain.UserManagement.Service
 {
     /// <summary>
     /// User management service.
     /// </summary>
     public class UserManagementService : IUserManagementService
     {
-        private IPasswordPolicyRepository _passwordPolicyRepository;
-        private IUserRepository _userRepository;
+        private readonly IPasswordPolicyRepository _passwordPolicyRepository;
+        private readonly IUserRepository _userRepository;
+
+        public UserManagementService(IPasswordPolicyRepository passwordPolicyRepository, IUserRepository userRepository)
+        {
+            _passwordPolicyRepository = passwordPolicyRepository;
+            _userRepository = userRepository;
+        }
 
         public IRuleValidator<User> UserModelValidator { get; set; }
 
         public IRuleValidator<PasswordPolicy> PasswordPolicyValidator { get; set; }
 
         public IPasswordPolicyRuleValidator PasswordPolicyRuleValidator { get; set; }
-        
-        
-        public UserManagementService(IPasswordPolicyRepository passwordPolicyRepository, IUserRepository userRepository)
-        {
-            _passwordPolicyRepository = passwordPolicyRepository;
-            _userRepository = userRepository;
-        }
-        
-        
+
+        #region IUserManagementService Members
+
         /// <summary>
         /// Saves the password policy.
         /// </summary>
@@ -42,22 +39,21 @@ namespace ReEnterprise.Domain.UserManagement
         /// <returns>
         /// Password policy entity, containing validation messages.
         /// </returns>
-        public SavePasswordPolicyResponse SavePasswordPolicy(Contract.Entity.PasswordPolicy passwordPolicy)
+        public SavePasswordPolicyResponse SavePasswordPolicy(PasswordPolicy passwordPolicy)
         {
-            var validationResult = ValidatePasswordPolicy(passwordPolicy);
+            IEnumerable<ValidationMessage> validationResult = ValidatePasswordPolicy(passwordPolicy).ToList();
 
             if (!validationResult.HasError())
             {
                 _passwordPolicyRepository.SavePasswordPolicy(passwordPolicy);
             }
 
-            SavePasswordPolicyResponse response = new SavePasswordPolicyResponse();
+            var response = new SavePasswordPolicyResponse {PasswordPolicy = passwordPolicy};
 
-            response.PasswordPolicy = passwordPolicy;
             response.ValidationMessages.AddValidationMessages(validationResult);
 
             return response;
-        }        
+        }
 
         /// <summary>
         /// Retrieves the password policy.
@@ -67,10 +63,10 @@ namespace ReEnterprise.Domain.UserManagement
         /// </returns>
         public RetrievePasswordPolicyResponse RetrievePasswordPolicy()
         {
-            RetrievePasswordPolicyResponse response = new RetrievePasswordPolicyResponse();
+            var response = new RetrievePasswordPolicyResponse
+                               {PasswordPolicy = _passwordPolicyRepository.GetPasswordPolicy()};
 
-            response.PasswordPolicy = _passwordPolicyRepository.GetPasswordPolicy();
-            
+
             return response;
         }
 
@@ -84,20 +80,21 @@ namespace ReEnterprise.Domain.UserManagement
         /// </returns>
         public CreateUserResponse CreateUser(User newUser)
         {
-            var validationResult = ValidateUser(newUser);
+            IEnumerable<ValidationMessage> validationResult = ValidateUser(newUser).ToList();
 
             if (!validationResult.HasError())
             {
                 _userRepository.Create(newUser);
             }
 
-            CreateUserResponse response = new CreateUserResponse();
+            var response = new CreateUserResponse {User = newUser};
 
-            response.User = newUser;
             response.ValidationMessages.AddValidationMessages(validationResult);
 
             return response;
         }
+
+        #endregion
 
         private IEnumerable<ValidationMessage> ValidateUser(User newUser)
         {

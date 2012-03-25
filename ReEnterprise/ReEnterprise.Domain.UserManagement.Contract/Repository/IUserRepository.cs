@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ReEnterprise.Domain.UserManagement.Contract.Entity;
+﻿using ReEnterprise.Domain.UserManagement.Contract.Entity;
 
 namespace ReEnterprise.Domain.UserManagement.Contract.Repository
 {

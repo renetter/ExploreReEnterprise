@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
+﻿using NHibernate;
+using ReEnterprise.Domain.UserManagement.Contract.Entity;
 using ReEnterprise.Domain.UserManagement.Contract.Service;
 using ReEnterprise.Infrastructure.NHibernate.Interface;
-using NHibernate;
-using ReEnterprise.Domain.UserManagement.Contract.Entity;
 
 namespace ReEnterprise.Infrastructure.Service.UserManagement
 {
     public class SecurityService : ISecurityService
     {
-        private IUserManagementService _userManagementService;
-        private ISessionFactoryManager _sessionFactoryManager;
+        private readonly ISessionFactoryManager _sessionFactoryManager;
+        private readonly IUserManagementService _userManagementService;
 
-        public SecurityService(IUserManagementService userManagementService, ISessionFactoryManager sessionFactoryManager)
+        public SecurityService(IUserManagementService userManagementService,
+                               ISessionFactoryManager sessionFactoryManager)
         {
             _userManagementService = userManagementService;
             _sessionFactoryManager = sessionFactoryManager;
         }
+
+        #region ISecurityService Members
 
         public CreateUserResponse CreateUser(User newUser)
         {
@@ -33,5 +30,7 @@ namespace ReEnterprise.Infrastructure.Service.UserManagement
 
             return result;
         }
+
+        #endregion
     }
 }

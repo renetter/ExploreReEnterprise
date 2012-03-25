@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ReEnterprise.Core;
-using System.Runtime.Serialization;
-using ReEnterprise.Domain.UserManagement.Contract.Validator;
+﻿using System.Runtime.Serialization;
 using FluentValidation.Attributes;
+using ReEnterprise.Domain.UserManagement.Contract.Validator;
 
 namespace ReEnterprise.Domain.UserManagement.Contract.Entity
 {
@@ -13,7 +8,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
     /// Password Policy
     /// </summary>
     [DataContract]
-    [Validator(typeof(PasswordPolicyValidator))]
+    [Validator(typeof (PasswordPolicyValidator))]
     public class PasswordPolicy
     {
         /// <summary>

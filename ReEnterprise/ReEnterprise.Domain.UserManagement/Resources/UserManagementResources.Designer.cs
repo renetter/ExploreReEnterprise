@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ReEnterprise.Domain.UserManagement.Resources {
+namespace ReEnterprise.Domain.UserManagement.Service.Resources {
     using System;
     
     

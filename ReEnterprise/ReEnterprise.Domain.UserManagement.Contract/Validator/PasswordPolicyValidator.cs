@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ReEnterprise.Domain.UserManagement.Contract.Entity;
+﻿using ReEnterprise.Domain.UserManagement.Contract.Entity;
 using FluentValidation;
-using ReEnterprise.Domain.UserManagement.Contract.Resources;
+using ReEnterprise.Domain.UserManagement.Service.Contract.Resources;
 
 namespace ReEnterprise.Domain.UserManagement.Contract.Validator
 {

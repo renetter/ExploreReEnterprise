@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Linq.Expressions;
 
 namespace ReEnterprise.Core
@@ -21,11 +20,14 @@ namespace ReEnterprise.Core
         /// <param name="messages">The messages.</param>
         /// <param name="messageType">Type of the message.</param>
         /// <returns>Validation Message.</returns>
-        public static ValidationMessage CreateValidationMessage<TModel, TValue>(this TModel targetModel, Expression<Func<TModel, TValue>> expression, string messages, ValidationMessageType messageType) 
+        public static ValidationMessage CreateValidationMessage<TModel, TValue>(this TModel targetModel,
+                                                                                Expression<Func<TModel, TValue>>
+                                                                                    expression, string messages,
+                                                                                ValidationMessageType messageType)
         {
             string fieldName = FindMemberName(expression);
 
-            return new ValidationMessage { Field = fieldName, MessageType = messageType, MessageValue = messages };
+            return new ValidationMessage {Field = fieldName, MessageType = messageType, MessageValue = messages};
         }
 
         /// <summary>
@@ -33,14 +35,15 @@ namespace ReEnterprise.Core
         /// </summary>
         /// <param name="validationMessages">The validation messages.</param>
         /// <param name="addedValidationMessages">The added validation messages.</param>
-        public static void AddValidationMessages(this ICollection<ValidationMessage> validationMessages, IEnumerable<ValidationMessage> addedValidationMessages) 
+        public static void AddValidationMessages(this ICollection<ValidationMessage> validationMessages,
+                                                 IEnumerable<ValidationMessage> addedValidationMessages)
         {
             if (addedValidationMessages == null)
             {
                 return;
             }
 
-            foreach (var validationMessage in addedValidationMessages)
+            foreach (ValidationMessage validationMessage in addedValidationMessages)
             {
                 validationMessages.Add(validationMessage);
             }
@@ -55,7 +58,7 @@ namespace ReEnterprise.Core
         /// </returns>
         public static bool HasError(this IEnumerable<ValidationMessage> messages)
         {
-            return messages.Where(c => c.MessageType == ValidationMessageType.Error).Any();
+            return messages.Any(c => c.MessageType == ValidationMessageType.Error);
         }
 
         /// <summary>
@@ -78,7 +81,7 @@ namespace ReEnterprise.Core
         /// </returns>
         public static bool HasWarning(this IEnumerable<ValidationMessage> messages)
         {
-            return messages.Where(c => c.MessageType == ValidationMessageType.Warning).Any();
+            return messages.Any(c => c.MessageType == ValidationMessageType.Warning);
         }
 
         /// <summary>
@@ -101,7 +104,7 @@ namespace ReEnterprise.Core
         /// </returns>
         public static bool HasInformation(this IEnumerable<ValidationMessage> messages)
         {
-            return messages.Where(c => c.MessageType == ValidationMessageType.Information).Any();
+            return messages.Any(c => c.MessageType == ValidationMessageType.Information);
         }
 
         /// <summary>
@@ -124,11 +127,13 @@ namespace ReEnterprise.Core
         {
             if (expression.Body.NodeType == ExpressionType.MemberAccess)
             {
-                return (expression.Body as MemberExpression).Member.Name;
+                var memberExpression = expression.Body as MemberExpression;
+
+                if (memberExpression != null)
+                    return memberExpression.Member.Name;
             }
 
             return string.Empty;
         }
     }
-
 }

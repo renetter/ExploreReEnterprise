@@ -1,24 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ReEnterprise.Core.Tests.Resources;
-using ReEnterprise.Core.Resources;
-using ReEnterprise.Core.Interface;
-using ReEnterprise.Core.Generic;
-using FluentValidation;
 using Castle.Windsor;
-using Castle.MicroKernel.Registration;
-using Microsoft.Practices.ServiceLocation;
 using CommonServiceLocator.WindsorAdapter;
+using FluentValidation;
 using FluentValidation.Attributes;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ReEnterprise.Core.Generic;
+using ReEnterprise.Core.Interface;
+using ReEnterprise.Core.Tests.Resources;
 
 namespace ReEnterprise.Core.Tests
 {
     [TestClass]
     public class BusinessRuleValidatorTest
     {
+        [TestInitialize]
+        public void Setup()
+        {
+            IWindsorContainer container = new WindsorContainer();
+            container.Install(new CoreInstaller());
+
+            ServiceLocator.SetLocatorProvider(() => new WindsorServiceLocator(container));
+        }
+
+        [TestMethod]
+        public void Invalid_Data_Should_Return_Validation_Messages()
+        {
+            var model = new TestModel();
+
+            IBusinessRulesValidator businessRuleValidator = new BusinessRulesValidator();
+
+            businessRuleValidator.Add(ServiceLocator.Current.GetInstance<IRuleValidator<TestModel>>(), model);
+
+            IEnumerable<ValidationMessage> validationResult = businessRuleValidator.Validate();
+
+            Assert.IsTrue(validationResult.Count() > 0);
+        }
+
+        #region Nested type: TestModel
+
+        [Validator(typeof (TestModelValidator))]
+        private class TestModel
+        {
+            public string Id { get; set; }
+
+            public string Name { get; set; }
+
+            public int Age { get; set; }
+        }
+
+        #endregion
+
+        #region Nested type: TestModelValidator
+
         private class TestModelValidator : AbstractValidator<TestModel>
         {
             public TestModelValidator()
@@ -29,37 +64,6 @@ namespace ReEnterprise.Core.Tests
             }
         }
 
-        [Validator(typeof(TestModelValidator))]
-        private class TestModel
-        {            
-            public string Id { get; set; }
-
-            public string Name { get; set; }
-
-            public int Age { get; set; }
-        }
-
-        [TestInitialize]
-        public void Setup()
-        {
-            IWindsorContainer container = new WindsorContainer();
-            container.Install(new CoreInstaller());
-
-            ServiceLocator.SetLocatorProvider(() => new WindsorServiceLocator(container));            
-        }
-
-        [TestMethod]
-        public void Invalid_Data_Should_Return_Validation_Messages()
-        {
-            TestModel model = new TestModel();
-
-            IBusinessRulesValidator businessRuleValidator = new BusinessRulesValidator();
-
-            businessRuleValidator.Add(ServiceLocator.Current.GetInstance<IRuleValidator<TestModel>>(),model);
-
-            var validationResult = businessRuleValidator.Validate();
-
-            Assert.IsTrue(validationResult.Count() > 0);
-        }
+        #endregion
     }
 }

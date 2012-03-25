@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ReEnterprise.Infrastructure.NHibernate.Interface;
+﻿using FluentNHibernate.Cfg;
 using NHibernate;
-using FluentNHibernate.Cfg;
 using NHibernate.Cfg;
-using System.Reflection;
+using ReEnterprise.Infrastructure.NHibernate.Interface;
 
 namespace ReEnterprise.Infrastructure.NHibernate
 {
     public class SessionFactoryManager : ISessionFactoryManager
     {
-        private static object _syncObject = new object();
-        private static ISessionFactory _sessionFactory;
+        private static readonly object SyncObject = new object();
+        private static volatile ISessionFactory _sessionFactory;
         private ISession _session;
+
+        #region ISessionFactoryManager Members
 
         public ISessionFactory GetSessionFactory()
         {
             if (_sessionFactory == null)
             {
-                lock (_syncObject)
+                lock (SyncObject)
                 {
                     if (_sessionFactory == null)
                     {
@@ -28,8 +25,8 @@ namespace ReEnterprise.Infrastructure.NHibernate
                         configuration.Configure();
 
                         _sessionFactory = Fluently.Configure(configuration)
-                                            .Mappings(x => x.FluentMappings.AddFromAssemblyOf<SessionFactoryManager>())
-                                            .BuildSessionFactory();
+                                                     .Mappings(x => x.FluentMappings.AddFromAssemblyOf<SessionFactoryManager>())
+                                                     .BuildSessionFactory();
                     }
                 }
             }
@@ -46,5 +43,7 @@ namespace ReEnterprise.Infrastructure.NHibernate
 
             return _session;
         }
+
+        #endregion
     }
 }

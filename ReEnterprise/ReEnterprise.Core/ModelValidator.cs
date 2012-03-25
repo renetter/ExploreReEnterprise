@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using ReEnterprise.Core.Generic;
 using FluentValidation;
 using FluentValidation.Results;
+using ReEnterprise.Core.Generic;
 
 namespace ReEnterprise.Core
 {
@@ -11,15 +10,17 @@ namespace ReEnterprise.Core
     /// Generic validator for model that has implemented data annotation validation.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ModelValidator<T> : IRuleValidator<T>
+    public class ModelValidator<T> : IRuleValidator<T> where T : class
     {
+        private readonly IValidatorFactory _validatorFactory;
         private T _target;
-        private IValidatorFactory _validatorFactory;
 
         public ModelValidator(IValidatorFactory validatorFactory)
         {
             _validatorFactory = validatorFactory;
         }
+
+        #region IRuleValidator<T> Members
 
         /// <summary>
         /// Sets the validation target.
@@ -48,17 +49,19 @@ namespace ReEnterprise.Core
             ValidationResult validationResults = modelValidator.Validate(_target);
 
             // map the fluent validation message to validation message
-            foreach (var validationResult in validationResults.Errors)
+            foreach (ValidationFailure validationResult in validationResults.Errors)
             {
                 modelValidationResults.Add(new ValidationMessage
-                {
-                    Field = validationResult.PropertyName,
-                    MessageType = ValidationMessageType.Error,
-                    MessageValue = validationResult.ErrorMessage                    
-                });
+                                               {
+                                                   Field = validationResult.PropertyName,
+                                                   MessageType = ValidationMessageType.Error,
+                                                   MessageValue = validationResult.ErrorMessage
+                                               });
             }
 
             return modelValidationResults;
         }
+
+        #endregion
     }
 }
