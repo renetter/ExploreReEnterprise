@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ReEnterprise.Core.Generic;
 using FluentValidation;
-using Microsoft.Practices.ServiceLocation;
 using FluentValidation.Results;
 
 namespace ReEnterprise.Core
@@ -15,6 +14,12 @@ namespace ReEnterprise.Core
     public class ModelValidator<T> : IRuleValidator<T>
     {
         private T _target;
+        private IValidatorFactory _validatorFactory;
+
+        public ModelValidator(IValidatorFactory validatorFactory)
+        {
+            _validatorFactory = validatorFactory;
+        }
 
         /// <summary>
         /// Sets the validation target.
@@ -38,9 +43,7 @@ namespace ReEnterprise.Core
 
             IList<ValidationMessage> modelValidationResults = new List<ValidationMessage>();
 
-            IValidatorFactory validatorFactory = ServiceLocator.Current.GetInstance<IValidatorFactory>();
-
-            IValidator modelValidator = validatorFactory.GetValidator<T>();
+            IValidator modelValidator = _validatorFactory.GetValidator<T>();
 
             ValidationResult validationResults = modelValidator.Validate(_target);
 

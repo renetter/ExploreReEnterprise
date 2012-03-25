@@ -11,7 +11,7 @@ namespace ReEnterprise.Infrastructure.NHibernate.Mapping
     {
         public PasswordPolicyMapping()
         {
-            Map(c => c.MinimumLength);
+            Id(c => c.MinimumLength);
             Map(c => c.StrongPassword);
         }
     }

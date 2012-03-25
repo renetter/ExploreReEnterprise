@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ReEnterprise.Domain.UserManagement.Contract.Entity;
+using ReEnterprise.Core;
 
 namespace ReEnterprise.Domain.UserManagement.Contract.Service
 {
@@ -16,13 +17,35 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Service
         /// </summary>
         /// <param name="passwordPolicy">The password policy.</param>
         /// <returns>Password policy entity, containing validation messages.</returns>
-        PasswordPolicy SavePasswordPolicy(PasswordPolicy passwordPolicy);
+        SavePasswordPolicyResponse SavePasswordPolicy(PasswordPolicy passwordPolicy);
 
         /// <summary>
         /// Retrieves the password policy.
         /// </summary>
         /// <returns>Password policy entity.</returns>
-        PasswordPolicy RetrievePasswordPolicy();
+        RetrievePasswordPolicyResponse RetrievePasswordPolicy();
+
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="newUser">The new user.</param>
+        /// <returns>User entity, Contain validation result message if any.</returns>
+        CreateUserResponse CreateUser(User newUser);
+    }
+
+    public class SavePasswordPolicyResponse : ResponseBase
+    {
+        public PasswordPolicy PasswordPolicy { get; set; }
+    }
+
+    public class RetrievePasswordPolicyResponse : ResponseBase
+    {
+        public PasswordPolicy PasswordPolicy { get; set; }
+    }
+
+    public class CreateUserResponse : ResponseBase
+    {
+        public User User { get; set; }
     }
 
 }

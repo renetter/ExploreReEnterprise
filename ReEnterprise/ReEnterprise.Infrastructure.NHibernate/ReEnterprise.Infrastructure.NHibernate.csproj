@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="Interface\ISessionFactoryManager.cs" />
     <Compile Include="Mapping\PasswordPolicyMapping.cs" />
+    <Compile Include="Mapping\UserMapping.cs" />
+    <Compile Include="RepositoryBaseNHibernate.cs" />
     <Compile Include="SessionFactoryManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionManagerNHibernate.cs" />

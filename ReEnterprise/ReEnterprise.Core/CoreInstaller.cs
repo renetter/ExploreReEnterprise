@@ -7,17 +7,18 @@ using ReEnterprise.Core.Interface;
 using FluentValidation;
 using FluentValidation.Attributes;
 using ReEnterprise.Core.Resources;
+using ReEnterprise.Core.Generic;
 
 namespace ReEnterprise.Core
 {
     /// <summary>
     /// Installer class to register all the core compoenent to windwsor container.
     /// </summary>
-    public class CoreWindsorInstaller : IWindsorInstaller
+    public class CoreInstaller : IWindsorInstaller
     {
         public void Install(Castle.Windsor.IWindsorContainer container, Castle.MicroKernel.SubSystems.Configuration.IConfigurationStore store)
         {
-            container.Register(Component.For(typeof(ModelValidator<>)).LifeStyle.Transient);
+            container.Register(Component.For(typeof(IRuleValidator<>)).ImplementedBy(typeof(ModelValidator<>)).LifeStyle.Transient);
             container.Register(Component.For<IBusinessRulesValidator>().ImplementedBy<BusinessRulesValidator>().LifeStyle.Transient);
             container.Register(Component.For<IValidatorFactory>().ImplementedBy<AttributedValidatorFactory>().LifeStyle.Singleton);
 

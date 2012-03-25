@@ -10,6 +10,9 @@ using ReEnterprise.Domain.UserManagement.Contract.Repository;
 using ReEnterprise.Domain.UserManagement.Contract.Resources;
 using ReEnterprise.Domain.UserManagement.Contract.Service;
 using ReEnterprise.Domain.UserManagement.Resources;
+using System;
+using ReEnterprise.Domain.UserManagement.Contract.Validator;
+using ReEnterprise.Domain.UserManagement.Validator;
 
 namespace ReEnterprise.Domain.UserManagement.Tests
 {
@@ -20,17 +23,27 @@ namespace ReEnterprise.Domain.UserManagement.Tests
         public void Setup()
         {
             IWindsorContainer container = new WindsorContainer();
-            container.Install(new CoreWindsorInstaller());
+            container.Install(new CoreInstaller());
 
             container.Register(Component.For<IUserManagementService>().ImplementedBy<UserManagementService>().LifeStyle.Transient);
             
             
             Mock<IPasswordPolicyRepository> passwordPolicyRepository = new Mock<IPasswordPolicyRepository>();
-            passwordPolicyRepository.Setup(c => c.GetPasswordPolicy()).Returns(new PasswordPolicy());
+            passwordPolicyRepository.Setup(c => c.GetPasswordPolicy()).Returns(new PasswordPolicy { MinimumLength = 5, StrongPassword = true });
 
             container.Register(Component.For<IPasswordPolicyRepository>().Instance(passwordPolicyRepository.Object));
+            container.Register(Component.For<IUserRepository>().Instance(ConfigureUserRepository()));
+            
+            container.Register(Component.For<IPasswordPolicyRuleValidator>().ImplementedBy<PasswordPolicyRuleValidator>().LifeStyle.Transient);
 
             ServiceLocator.SetLocatorProvider(() => new WindsorServiceLocator(container));
+        }
+
+        private IUserRepository ConfigureUserRepository()
+        {
+            Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
+
+            return userRepository.Object;
         }
 
         [TestMethod]
@@ -44,7 +57,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
 
             IUserManagementService userService = ServiceLocator.Current.GetInstance<IUserManagementService>();
 
-            PasswordPolicy result = userService.SavePasswordPolicy(passwordPolicy);
+            SavePasswordPolicyResponse result = userService.SavePasswordPolicy(passwordPolicy);
 
             Assert.IsFalse(result.ValidationMessages.HasError());
         }
@@ -60,7 +73,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
 
             IUserManagementService userService = ServiceLocator.Current.GetInstance<IUserManagementService>();
 
-            PasswordPolicy result = userService.SavePasswordPolicy(passwordPolicy);
+            SavePasswordPolicyResponse result = userService.SavePasswordPolicy(passwordPolicy);
 
             Assert.IsTrue(result.ValidationMessages.HasError());
             Assert.AreEqual(1, result.ValidationMessages.Count);
@@ -76,9 +89,52 @@ namespace ReEnterprise.Domain.UserManagement.Tests
         {
             IUserManagementService userService = ServiceLocator.Current.GetInstance<IUserManagementService>();
 
-            PasswordPolicy passwordPolicy = userService.RetrievePasswordPolicy();
+            RetrievePasswordPolicyResponse result = userService.RetrievePasswordPolicy();
 
-            Assert.IsNotNull(passwordPolicy);
+            Assert.IsNotNull(result.PasswordPolicy);
+        }
+
+        [TestMethod]
+        public void Create_User_With_Valid_Data_Sould_Not_Produce_Validation_Error()
+        {
+            IUserManagementService userService = ServiceLocator.Current.GetInstance<IUserManagementService>();
+
+            User user = new User
+            {
+                UserId = Guid.NewGuid().ToString(),
+                FirstName = "User 1",
+                LastName = "Last Name",
+                Email = "test@test.com",
+                PhoneNumber = "1245232323",
+                Password = "A12@#ddd",
+                ApplyPasswordPolicy = true,
+                SecurityQuestion = "Test",
+                SecurityQuestionAnswer = "Test"
+            };
+
+            CreateUserResponse result = userService.CreateUser(user);
+
+            Assert.IsFalse(result.EntityHasError());
+        }
+
+        [TestMethod]
+        public void Create_User_With_Invalid_Data_Produce_Validation_Error()
+        {
+            IUserManagementService userService = ServiceLocator.Current.GetInstance<IUserManagementService>();
+
+            User user = new User
+            {
+                FirstName = "User 1",
+                LastName = "Last Name",
+                PhoneNumber = "1245232323",
+                Password = "A1",
+                ApplyPasswordPolicy = true,
+                SecurityQuestionAnswer = "Test"
+            };
+
+            CreateUserResponse result = userService.CreateUser(user);
+
+            Assert.IsTrue(result.EntityHasError());
         }
     }
 }

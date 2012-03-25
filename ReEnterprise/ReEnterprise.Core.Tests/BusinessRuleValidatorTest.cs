@@ -43,7 +43,7 @@ namespace ReEnterprise.Core.Tests
         public void Setup()
         {
             IWindsorContainer container = new WindsorContainer();
-            container.Install(new CoreWindsorInstaller());
+            container.Install(new CoreInstaller());
 
             ServiceLocator.SetLocatorProvider(() => new WindsorServiceLocator(container));            
         }
@@ -55,7 +55,7 @@ namespace ReEnterprise.Core.Tests
 
             IBusinessRulesValidator businessRuleValidator = new BusinessRulesValidator();
 
-            businessRuleValidator.CreateValidator<ModelValidator<TestModel>, TestModel>(model);
+            businessRuleValidator.Add(ServiceLocator.Current.GetInstance<IRuleValidator<TestModel>>(),model);
 
             var validationResult = businessRuleValidator.Validate();
 

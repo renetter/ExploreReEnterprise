@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using ReEnterprise.Domain.UserManagement.Contract.Validator;
 using FluentValidation.Attributes;
+using ReEnterprise.Core;
 
 namespace ReEnterprise.Domain.UserManagement.Contract.Entity
 {
@@ -15,6 +16,15 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
     [Validator(typeof(UserValidator))]
     public class User
     {
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class.
+        /// </summary>
+        public User()
+        {
+            UserId = Guid.NewGuid().ToString();
+        }
+
         /// <summary>
         /// Gets or sets the user id.
         /// </summary>
@@ -22,7 +32,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The user id.
         /// </value>
         [DataMember]
-        public string UserId { get; set; }
+        public virtual string UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the first name.
@@ -31,7 +41,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The first name.
         /// </value>
         [DataMember]
-        public string FirstName { get; set; }
+        public virtual string FirstName { get; set; }
 
         /// <summary>
         /// Gets or sets the last name.
@@ -40,7 +50,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The last name.
         /// </value>
         [DataMember]
-        public string LastName { get; set; }
+        public virtual string LastName { get; set; }
 
         /// <summary>
         /// Gets or sets the email.
@@ -49,7 +59,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The email.
         /// </value>
         [DataMember]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
 
         /// <summary>
         /// Gets or sets the phone number.
@@ -58,7 +68,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The phone number.
         /// </value>
         [DataMember]
-        public string PhoneNumber { get; set; }
+        public virtual string PhoneNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the password.
@@ -67,7 +77,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The password.
         /// </value>
         [DataMember]
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
 
         /// <summary>
         /// Gets or sets the address.
@@ -76,7 +86,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The address.
         /// </value>
         [DataMember]
-        public string Address { get; set; }
+        public virtual string Address { get; set; }
 
         /// <summary>
         /// Gets or sets the security question.
@@ -85,7 +95,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The security question.
         /// </value>
         [DataMember]
-        public string SecurityQuestion { get; set; }
+        public virtual string SecurityQuestion { get; set; }
 
         /// <summary>
         /// Gets or sets the security question answer.
@@ -94,7 +104,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The security question answer.
         /// </value>
         [DataMember]
-        public string SecurityQuestionAnswer { get; set; }
+        public virtual string SecurityQuestionAnswer { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether user must change password on next logon.
@@ -103,7 +113,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         ///   <c>true</c> if user forced to change password; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public bool ForceChangePassword { get; set; }
+        public virtual bool ForceChangePassword { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether password policy applied for this user.
@@ -112,6 +122,6 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         ///   <c>true</c> if [apply password policy]; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public bool ApplyPasswordPolicy { get; set; }
+        public virtual bool ApplyPasswordPolicy { get; set; }
     }
 }

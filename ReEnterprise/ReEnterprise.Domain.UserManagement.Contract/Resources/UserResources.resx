@@ -139,7 +139,7 @@
     <value>Password</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
-    <value>PhoneNumber</value>
+    <value>Phone Number</value>
   </data>
   <data name="SecurityQuestion" xml:space="preserve">
     <value>Security Question</value>

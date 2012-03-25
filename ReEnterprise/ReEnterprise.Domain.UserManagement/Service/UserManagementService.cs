@@ -5,11 +5,11 @@ using System.Text;
 using ReEnterprise.Domain.UserManagement.Contract;
 using ReEnterprise.Domain.UserManagement.Contract.Service;
 using ReEnterprise.Domain.UserManagement.Contract.Validator;
-using Microsoft.Practices.ServiceLocation;
 using ReEnterprise.Core;
 using ReEnterprise.Domain.UserManagement.Contract.Repository;
 using ReEnterprise.Core.Interface;
 using ReEnterprise.Domain.UserManagement.Contract.Entity;
+using ReEnterprise.Core.Generic;
 
 namespace ReEnterprise.Domain.UserManagement
 {
@@ -19,16 +19,22 @@ namespace ReEnterprise.Domain.UserManagement
     public class UserManagementService : IUserManagementService
     {
         private IPasswordPolicyRepository _passwordPolicyRepository;
+        private IUserRepository _userRepository;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserManagementService"/> class.
-        /// </summary>
-        /// <param name="passwordPolicyRepository">The password policy repository.</param>
-        public UserManagementService(IPasswordPolicyRepository passwordPolicyRepository)
+        public IRuleValidator<User> UserModelValidator { get; set; }
+
+        public IRuleValidator<PasswordPolicy> PasswordPolicyValidator { get; set; }
+
+        public IPasswordPolicyRuleValidator PasswordPolicyRuleValidator { get; set; }
+        
+        
+        public UserManagementService(IPasswordPolicyRepository passwordPolicyRepository, IUserRepository userRepository)
         {
             _passwordPolicyRepository = passwordPolicyRepository;
+            _userRepository = userRepository;
         }
-
+        
+        
         /// <summary>
         /// Saves the password policy.
         /// </summary>
@@ -36,29 +42,22 @@ namespace ReEnterprise.Domain.UserManagement
         /// <returns>
         /// Password policy entity, containing validation messages.
         /// </returns>
-        public Contract.Entity.PasswordPolicy SavePasswordPolicy(Contract.Entity.PasswordPolicy passwordPolicy)
+        public SavePasswordPolicyResponse SavePasswordPolicy(Contract.Entity.PasswordPolicy passwordPolicy)
         {
-            Validate(passwordPolicy);
+            var validationResult = ValidatePasswordPolicy(passwordPolicy);
 
-            if (!passwordPolicy.EntityHasError())
+            if (!validationResult.HasError())
             {
                 _passwordPolicyRepository.SavePasswordPolicy(passwordPolicy);
             }
 
-            return passwordPolicy;
-        }
+            SavePasswordPolicyResponse response = new SavePasswordPolicyResponse();
 
-        /// <summary>
-        /// Validates the specified password policy entity.
-        /// </summary>
-        /// <param name="passwordPolicy">The password policy.</param>
-        private static void Validate(Contract.Entity.PasswordPolicy passwordPolicy)
-        {
-            IBusinessRulesValidator validator = ServiceLocator.Current.GetInstance<IBusinessRulesValidator>();
-            validator.CreateValidator<ModelValidator<PasswordPolicy>, PasswordPolicy>(passwordPolicy);
+            response.PasswordPolicy = passwordPolicy;
+            response.ValidationMessages.AddValidationMessages(validationResult);
 
-            passwordPolicy.ValidationMessages.AddValidationMessages(validator.Validate());
-        }
+            return response;
+        }        
 
         /// <summary>
         /// Retrieves the password policy.
@@ -66,9 +65,59 @@ namespace ReEnterprise.Domain.UserManagement
         /// <returns>
         /// Password policy entity.
         /// </returns>
-        public Contract.Entity.PasswordPolicy RetrievePasswordPolicy()
+        public RetrievePasswordPolicyResponse RetrievePasswordPolicy()
         {
-            return _passwordPolicyRepository.GetPasswordPolicy();
+            RetrievePasswordPolicyResponse response = new RetrievePasswordPolicyResponse();
+
+            response.PasswordPolicy = _passwordPolicyRepository.GetPasswordPolicy();
+            
+            return response;
+        }
+
+
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
+        /// <param name="newUser">The new user.</param>
+        /// <returns>
+        /// User entity, Contain validation result message if any.
+        /// </returns>
+        public CreateUserResponse CreateUser(User newUser)
+        {
+            var validationResult = ValidateUser(newUser);
+
+            if (!validationResult.HasError())
+            {
+                _userRepository.Create(newUser);
+            }
+
+            CreateUserResponse response = new CreateUserResponse();
+
+            response.User = newUser;
+            response.ValidationMessages.AddValidationMessages(validationResult);
+
+            return response;
+        }
+
+        private IEnumerable<ValidationMessage> ValidateUser(User newUser)
+        {
+            IBusinessRulesValidator businessRuleValidator = new BusinessRulesValidator();
+            businessRuleValidator.Add(UserModelValidator, newUser);
+            businessRuleValidator.Add(PasswordPolicyRuleValidator, newUser);
+
+            return businessRuleValidator.Validate();
+        }
+
+        /// <summary>
+        /// Validates the specified password policy entity.
+        /// </summary>
+        /// <param name="passwordPolicy">The password policy.</param>
+        private IEnumerable<ValidationMessage> ValidatePasswordPolicy(PasswordPolicy passwordPolicy)
+        {
+            IBusinessRulesValidator validator = new BusinessRulesValidator();
+            validator.Add(PasswordPolicyValidator, passwordPolicy);
+
+            return validator.Validate();
         }
     }
 }

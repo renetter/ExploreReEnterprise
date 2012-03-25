@@ -14,7 +14,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
     /// </summary>
     [DataContract]
     [Validator(typeof(PasswordPolicyValidator))]
-    public class PasswordPolicy : EntityBase
+    public class PasswordPolicy
     {
         /// <summary>
         /// Gets or sets the minimum length.
@@ -23,7 +23,7 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// The minimum length.
         /// </value>
         [DataMember]
-        public int MinimumLength { get; set; }
+        public virtual int MinimumLength { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is mixed character.
@@ -32,6 +32,6 @@ namespace ReEnterprise.Domain.UserManagement.Contract.Entity
         /// 	<c>true</c> if this instance is mixed character; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public bool StrongPassword { get; set; }
+        public virtual bool StrongPassword { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace ReEnterprise.Core.Tests
         {
             IWindsorContainer container = new WindsorContainer();
 
-            container.Install(new CoreWindsorInstaller());
+            container.Install(new CoreInstaller());
 
             ServiceLocator.SetLocatorProvider(() => new WindsorServiceLocator(container));
         }
@@ -59,7 +59,7 @@ namespace ReEnterprise.Core.Tests
                 Age = 25
             };
 
-            IRuleValidator<TestModel> validator = ServiceLocator.Current.GetInstance<ModelValidator<TestModel>>();
+            IRuleValidator<TestModel> validator = ServiceLocator.Current.GetInstance<IRuleValidator<TestModel>>();
 
             validator.SetValidationTarget(model);
 
@@ -74,7 +74,7 @@ namespace ReEnterprise.Core.Tests
                 Age = 10 
             };
 
-            IRuleValidator<TestModel> validator = ServiceLocator.Current.GetInstance<ModelValidator<TestModel>>();
+            IRuleValidator<TestModel> validator = ServiceLocator.Current.GetInstance<IRuleValidator<TestModel>>();
             validator.SetValidationTarget(model);
 
             var message = validator.Validate();
@@ -89,7 +89,7 @@ namespace ReEnterprise.Core.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void Exception_Should_Be_Thrown_If_The_Target_Not_Set()
         {
-            IRuleValidator<TestModel> validator = ServiceLocator.Current.GetInstance<ModelValidator<TestModel>>();
+            IRuleValidator<TestModel> validator = ServiceLocator.Current.GetInstance<IRuleValidator<TestModel>>();
             validator.Validate();
         }
     }

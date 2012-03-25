@@ -28,7 +28,7 @@ namespace ReEnterprise.Infrastructure.NHibernate
                         configuration.Configure();
 
                         _sessionFactory = Fluently.Configure(configuration)
-                                            .Mappings(x => x.FluentMappings.AddFromAssembly(Assembly.GetExecutingAssembly()))
+                                            .Mappings(x => x.FluentMappings.AddFromAssemblyOf<SessionFactoryManager>())
                                             .BuildSessionFactory();
                     }
                 }
@@ -41,7 +41,7 @@ namespace ReEnterprise.Infrastructure.NHibernate
         {
             if (_session == null)
             {
-                _session = _sessionFactory.OpenSession();
+                _session = GetSessionFactory().OpenSession();
             }
 
             return _session;

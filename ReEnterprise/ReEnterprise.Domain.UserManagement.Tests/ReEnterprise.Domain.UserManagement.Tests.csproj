@@ -64,6 +64,7 @@
     <Compile Include="PasswordPolicyRuleValidatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserManagementServiceTest.cs" />
+    <Compile Include="UserValidatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

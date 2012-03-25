@@ -64,7 +64,7 @@ namespace ReEnterprise.Core
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <param name="model">The model.</param>
         /// <returns>True if the specified model has error.</returns>
-        public static bool EntityHasError<TModel>(this TModel model) where TModel : EntityBase
+        public static bool EntityHasError<TModel>(this TModel model) where TModel : ResponseBase
         {
             return model.ValidationMessages.HasError();
         }
@@ -87,7 +87,7 @@ namespace ReEnterprise.Core
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <param name="model">The model.</param>
         /// <returns>True if the specified model contain warning.</returns>
-        public static bool EntityHasWarning<TModel>(this TModel model) where TModel : EntityBase
+        public static bool EntityHasWarning<TModel>(this TModel model) where TModel : ResponseBase
         {
             return model.ValidationMessages.HasWarning();
         }
@@ -110,7 +110,7 @@ namespace ReEnterprise.Core
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <param name="model">The model.</param>
         /// <returns>True if the specified model contain information message.</returns>
-        public static bool EntityHasInformation<TModel>(this TModel model) where TModel : EntityBase
+        public static bool EntityHasInformation<TModel>(this TModel model) where TModel : ResponseBase
         {
             return model.ValidationMessages.HasInformation();
         }

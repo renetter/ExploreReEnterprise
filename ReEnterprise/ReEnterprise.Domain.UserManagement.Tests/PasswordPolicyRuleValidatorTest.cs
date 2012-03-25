@@ -24,7 +24,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
         public void Setup()
         {
             IWindsorContainer container = new WindsorContainer();
-            container.Install(new CoreWindsorInstaller());
+            container.Install(new CoreInstaller());
             container.Register(Component.For<IPasswordPolicyRepository>().Instance(CreatePasswordPolicyRepositoryMock()));
             container.Register(Component.For<IPasswordPolicyRuleValidator>().ImplementedBy<PasswordPolicyRuleValidator>());
 
@@ -50,7 +50,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
             };
 
             IBusinessRulesValidator validator = ServiceLocator.Current.GetInstance<IBusinessRulesValidator>();
-            validator.CreateValidator<IPasswordPolicyRuleValidator, User>(user);
+            validator.Add(ServiceLocator.Current.GetInstance<IPasswordPolicyRuleValidator>(), user);
 
             // Act
             IEnumerable<ValidationMessage> result = validator.Validate();
@@ -70,7 +70,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
             };
 
             IBusinessRulesValidator validator = ServiceLocator.Current.GetInstance<IBusinessRulesValidator>();
-            validator.CreateValidator<IPasswordPolicyRuleValidator, User>(user);
+            validator.Add(ServiceLocator.Current.GetInstance<IPasswordPolicyRuleValidator>(), user);
 
             // Act
             IEnumerable<ValidationMessage> result = validator.Validate();
@@ -91,7 +91,7 @@ namespace ReEnterprise.Domain.UserManagement.Tests
             };
 
             IBusinessRulesValidator validator = ServiceLocator.Current.GetInstance<IBusinessRulesValidator>();
-            validator.CreateValidator<IPasswordPolicyRuleValidator, User>(user);
+            validator.Add(ServiceLocator.Current.GetInstance<IPasswordPolicyRuleValidator>(), user);
 
             // Act
             IEnumerable<ValidationMessage> result = validator.Validate();

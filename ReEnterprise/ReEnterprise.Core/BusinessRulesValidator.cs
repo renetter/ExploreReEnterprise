@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using ReEnterprise.Core.Interface;
 using ReEnterprise.Core.Generic;
-using Microsoft.Practices.ServiceLocation;
 
 namespace ReEnterprise.Core
 {
@@ -21,6 +20,18 @@ namespace ReEnterprise.Core
         public BusinessRulesValidator()
         {
             _validators = new List<IRuleValidator>();
+        }
+
+        /// <summary>
+        /// Adds the specified validator.
+        /// </summary>
+        /// <typeparam name="TModel">The type of the model.</typeparam>
+        /// <param name="validator">The validator.</param>
+        /// <param name="target">The target.</param>
+        public void Add<TModel>(IRuleValidator<TModel> validator, TModel target)
+        {
+            validator.SetValidationTarget(target);
+            _validators.Add(validator);
         }
 
         /// <summary>
@@ -48,29 +59,6 @@ namespace ReEnterprise.Core
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Creates the validator and add the validator with the specified targetModel.
-        /// </summary>
-        /// <typeparam name="TValidator">The type of the validator.</typeparam>
-        /// <typeparam name="TModel">The type of the model.</typeparam>
-        /// <param name="targetModel">The target model.</param>
-        /// <returns>
-        /// The validator instance
-        /// </returns>
-        public TValidator CreateValidator<TValidator, TModel>(TModel targetModel) where TValidator : IRuleValidator<TModel>
-        {
-            // Get validator instance
-            TValidator validator = ServiceLocator.Current.GetInstance<TValidator>();
-            
-            // Set validator target
-            validator.SetValidationTarget(targetModel);
-
-            // Add the validator to the validators
-            _validators.Add(validator);
-
-            return validator;
         }
     }
 }

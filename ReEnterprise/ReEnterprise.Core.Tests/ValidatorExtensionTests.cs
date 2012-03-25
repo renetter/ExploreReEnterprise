@@ -14,7 +14,7 @@ namespace ReEnterprise.Core.Tests
     [TestClass()]
     public class ValidatorExtensionTests
     {
-        private class ValidatorEntity : EntityBase
+        private class ValidatorEntity : ResponseBase
         {
             public string Id { get; set; }
         }

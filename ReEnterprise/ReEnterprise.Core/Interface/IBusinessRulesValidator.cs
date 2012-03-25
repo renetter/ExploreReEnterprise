@@ -15,13 +15,12 @@ namespace ReEnterprise.Core.Interface
         void Add(IRuleValidator validator);
 
         /// <summary>
-        /// Creates the validator and add the validator with the specified targetModel.
+        /// Adds the specified validator.
         /// </summary>
-        /// <typeparam name="TValidator">The type of the validator.</typeparam>
         /// <typeparam name="TModel">The type of the model.</typeparam>
-        /// <param name="targetModel">The target model.</param>
-        /// <returns>The validator instance</returns>
-        TValidator CreateValidator<TValidator, TModel>(TModel targetModel) where TValidator : IRuleValidator<TModel>;
+        /// <param name="validator">The validator.</param>
+        /// <param name="target">The target.</param>
+        void Add<TModel>(IRuleValidator<TModel> validator, TModel target);
 
         /// <summary>
         /// Validates the business rule.

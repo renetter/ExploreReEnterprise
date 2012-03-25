@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace ReEnterprise.Core
 {
     /// <summary>
     /// Provide base class for all entity.
     /// </summary>
-    public class EntityBase
+    [DataContract]
+    public class ResponseBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EntityBase"/> class.
+        /// Initializes a new instance of the <see cref="ResponseBase"/> class.
         /// </summary>
-        public EntityBase()
+        public ResponseBase()
         {
             ValidationMessages = new List<ValidationMessage>();
         }
@@ -21,6 +23,7 @@ namespace ReEnterprise.Core
         /// <summary>
         /// Gets the validation messages.
         /// </summary>
+        [DataMember]
         public IList<ValidationMessage> ValidationMessages { get; private set; }
     }
 }
